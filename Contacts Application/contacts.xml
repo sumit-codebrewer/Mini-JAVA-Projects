@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<contacts>
+<contact>
+	<first_name>Neha</first_name>
+	<last_name>Sharma</last_name>
+	<phone_number>212</phone_number>
+	<notes>Her notes</notes>
+</contact>
+<contact>
+	<first_name>Saransh</first_name>
+	<last_name>Kumar</last_name>
+	<phone_number>5555</phone_number>
+	<notes>His notes</notes>
+</contact>
+<contact>
+	<first_name>Sumit</first_name>
+	<last_name>Chutani</last_name>
+	<phone_number>1234</phone_number>
+	<notes>SomeNotes</notes>
+</contact>
+</contacts>
