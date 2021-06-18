@@ -1,7 +1,10 @@
 package husleFolder14;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,28 +20,46 @@ public class Locations implements Map<Integer,Location> {
 	private static Map<Integer,Location> locations=new LinkedHashMap<Integer, Location>();
 
 	public static void main(String[] args) throws IOException {
-		
-		try(BufferedWriter locFile=new BufferedWriter(new FileWriter("locations.txt"));
-			BufferedWriter dirFile=new BufferedWriter(new FileWriter("directions.txt"))){
+//		
+//		try(BufferedWriter locFile=new BufferedWriter(new FileWriter("locations.txt"));
+//			BufferedWriter dirFile=new BufferedWriter(new FileWriter("directions.txt"))){
+//			for(Location location:locations.values()) {
+//				locFile.write(location.getLocationID()+","+location.getDescription()+"\n");
+//				for(String direction:location.getExits().keySet()) {
+//					if(!direction.equalsIgnoreCase("Q")) {
+//						dirFile.write(location.getLocationID()+","+direction+","+location.getExits().get(direction)+"\n");
+//					}
+//				}
+//			}
+		try (DataOutputStream locFile=new DataOutputStream(new BufferedOutputStream(new FileOutputStream("locations.txt")))){
 			for(Location location:locations.values()) {
-				locFile.write(location.getLocationID()+","+location.getDescription()+"\n");
+				locFile.write(location.getLocationID());
+				locFile.writeUTF(location.getDescription());
+				System.out.println("Writing location "+location.getLocationID()+" : "+location.getDescription());
+				System.out.println("Writing "+(location.getExits().size()-1)+"exits");
+				locFile.writeInt(location.getExits().size()-1);
 				for(String direction:location.getExits().keySet()) {
-					dirFile.write(location.getLocationID()+","+direction+","+location.getExits().get(direction)+"\n");
+					if(!direction.equalsIgnoreCase("Q")) {
+						System.out.println("\t\t"+direction+location.getExits().get(direction));
+						locFile.writeUTF(direction);
+						locFile.writeInt(location.getExits().get(direction));
+					}
 				}
 			}
+		
 		}
-//		FileWriter locaFile=null;
+//		FileWriter locFile=null;
 //		try {
-//			locaFile=new FileWriter("locations.txt");
+//			locFile=new FileWriter("locations.txt");
 //			for(Location location:locations.values()) {
-//				locaFile.write(location.getLocationID()+","+location.getDescription()+"\n");
+//				locFile.write(location.getLocationID()+","+location.getDescription()+"\n");
 //			}
 //		}
 //		finally {
 //			System.out.println("Finally block executed");
-//			if(locaFile!=null) {
-//				System.out.println("Attempting to close locafile");
-//				locaFile.close();
+//			if(locFile!=null) {
+//				System.out.println("Attempting to close locFile");
+//				locFile.close();
 //			}
 //		}
 	}
